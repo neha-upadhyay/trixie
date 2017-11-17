@@ -7,10 +7,12 @@ import {
   Text,
   Dimensions,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Swiper from 'react-native-swiper';
+import CheckBox from 'react-native-checkbox';
 
 import introductionActions from './introductionActions';
 
@@ -46,6 +48,16 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class IntroductionScreen extends Component {
+	constructor(props){
+		super(props);
+
+		this._onSignInPress = this._onSignInPress.bind(this);
+	}
+
+	_onSignInPress() {
+		alert('hi');
+	}
+
 	render(){
 		return(
 			<View style={{flex: 1}}>
@@ -74,8 +86,32 @@ class IntroductionScreen extends Component {
 		          	))
 		          }
 		        </Swiper>
+		        <View style={{alignItems: 'center', position: 'absolute', bottom: 0, paddingBottom: 20}}>
+			        <View style={styles.footer}>
+				        <CheckBox
+				        	label=""
+		        			containerStyle={{borderRadius: 10}}
+				            checked={true}
+				            onChange={(checked) => console.log('I am checked', checked)}
+				        />
+				        <View>
+					        <Text style={{color: '#fff'}}> I confirm that I am a girl and</Text>
+					        <TouchableOpacity>
+					        	<Text style={{color: '#fff'}}> I agree to the Terms & Conditions</Text>	
+					        </TouchableOpacity>
+				        </View>
+			        </View> 
+			        <TouchableOpacity
+			        	onPress={this._onSignInPress}
+			        > 
+			        	<View style={{backgroundColor: '#000', opacity: 0.5, padding: 10}}>
+			        		<Text style={{color: '#fff'}}>
+			        			sign in with facebook 
+			        		</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		        </View>
 	       	</View>
-
 			);
 		}
 
@@ -88,7 +124,7 @@ const SwipeItem = (props) => (
       <Image 
           source={props.mainImage} 
           resizeMode="contain"
-          style={{height: win.height/2.2, width: win.width/1.7}}
+          style={{height: win.height/2.5, width: win.width/1.7}}
       />
       <Image 
           source={props.subImage} 
@@ -110,7 +146,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-  }
+  },
+  footer:{
+  	flexDirection: 'row', 
+	paddingHorizontal: 30,
+	paddingBottom: 10,
+	alignSelf: 'center', 
+	alignItems: 'center',
+	justifyContent: 'center',
+} 
+  
 });
 
 export default connect(null, null)(IntroductionScreen);
